@@ -4,7 +4,7 @@
   Página web desarrollada con HTML, CSS y JavaScript para organizar tiempos de revisión en hasta 4 conversaciones activas.
 </p>
 <p align="center">
-  <a href=" https://kathyalde21.github.io/control-tiempos-whatsapp/">Ver página web del proyecto</a>
+  <a href="https://kathyalde21.github.io/control-tiempos-whatsapp/">Ver página web del proyecto</a>
 </p>
 
 <!-- --------------------------------------------------------- -->
