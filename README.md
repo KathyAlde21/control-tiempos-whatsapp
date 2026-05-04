@@ -5,26 +5,23 @@
 </p>
 
 <p align="center">
-  <a href="AGREGAR_LINK_GITHUB_PAGES">Ver página web del proyecto</a>
+  <a href=" https://kathyalde21.github.io/control-tiempos-whatsapp/">Ver página web del proyecto</a>
 </p>
 
 <!-- --------------------------------------------------------- -->
 
 **<h3>📌 Descripción</h3>**
 
-<p>
-  Este proyecto nace como una herramienta práctica para apoyar la gestión de varias conversaciones activas al mismo tiempo. 
-  La idea principal es contar con una ayuda visual simple que permita controlar el tiempo entre respuestas, especialmente cuando se trabaja con distintos chats y se necesita evitar confusiones al cambiar de pestaña o conversación.
-</p>
+<p>Este proyecto nace como una herramienta práctica para apoyar la gestión de varias conversaciones activas al mismo tiempo. 
+  La idea principal es contar con una ayuda visual simple que permita controlar el tiempo entre respuestas, especialmente 
+  cuando se trabaja con distintos chats y se necesita evitar confusiones al cambiar de pestaña o conversación.</p>
 
-<p>
-  La página permite usar hasta <b>4 temporizadores independientes</b>, cada uno asociado a un chat. 
-  En cada tarjeta se puede anotar el nombre o referencia de la persona, definir un tiempo manualmente o seleccionar opciones rápidas de <b>3, 5 o 10 minutos</b>.
-</p>
+<p>La página permite usar hasta <b>4 temporizadores independientes</b>, cada uno asociado a un chat. 
+  En cada tarjeta se puede anotar el nombre o referencia de la persona, definir un tiempo manualmente o
+   seleccionar opciones rápidas de <b>3, 5 o 10 minutos</b></p>
 
-<p>
-  El objetivo no es generar presión ni estrés adicional, sino entregar una herramienta amigable, clara y fácil de usar para personas que no necesariamente tienen conocimientos técnicos.
-</p>
+<p>El objetivo no es generar presión ni estrés adicional, sino entregar una herramienta amigable, clara y fácil de usar
+ para personas que no necesariamente tienen conocimientos técnicos.</p>
 
 <!-- --------------------------------------------------------- -->
 
@@ -44,31 +41,24 @@
 
 **<h3>🧠 Propósito del proyecto</h3>**
 
-<p>
-  El propósito de este proyecto es facilitar el seguimiento de conversaciones simultáneas, evitando errores al responder y reduciendo la carga mental que puede producir estar pendiente de varios tiempos a la vez.
-</p>
+<p>El propósito de este proyecto es facilitar el seguimiento de conversaciones simultáneas, 
+  evitando errores al responder y reduciendo la carga mental que puede producir estar pendiente de varios tiempos a la vez.</p>
 
-<p>
-  Por eso, la interfaz se diseñó con textos simples, colores suaves y acciones claras. 
-  La prioridad fue crear una herramienta de apoyo, no un sistema complejo ni una aplicación que interrumpa el trabajo con alertas invasivas.
-</p>
+<p>Por eso, la interfaz se diseñó con textos simples, colores suaves y acciones claras. 
+  La prioridad fue crear una herramienta de apoyo, no un sistema complejo ni una aplicación
+   que interrumpa el trabajo con alertas invasivas.</p>
 
 <!-- --------------------------------------------------------- -->
 
 **<h3>🔐 Sobre el almacenamiento de datos</h3>**
 
-<p>
-  Este proyecto utiliza <b>localStorage</b>, por lo que los datos se guardan únicamente en el navegador de cada persona.
-</p>
+<p>Este proyecto utiliza <b>localStorage</b>, por lo que los datos se guardan únicamente en el navegador de cada persona.</p>
 
-<p>
-  La información no se envía a servidores, no se almacena en GitHub y no se comparte entre usuarios. 
-  Si otra persona abre el mismo enlace desde otro computador o navegador, tendrá sus propios datos guardados de forma independiente.
-</p>
+<p>La información no se envía a servidores, no se almacena en GitHub y no se comparte entre usuarios. 
+  Si otra persona abre el mismo enlace desde otro computador o navegador, tendrá sus propios datos guardados de forma independiente.</p>
 
-<p>
-  Se recomienda usar solo nombres o referencias simples, evitando ingresar datos sensibles como RUT, direcciones, teléfonos completos o información privada.
-</p>
+<p>Se recomienda usar solo nombres o referencias simples, evitando ingresar datos sensibles como RUT, direcciones,
+ teléfonos completos o información privada.</p>
 
 <!-- --------------------------------------------------------- -->
 
