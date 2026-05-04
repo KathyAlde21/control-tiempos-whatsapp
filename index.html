@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Control de tiempos para conversaciones</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="./assets/css/style.css" />
+</head>
+
+<body>
+
+    <header class="hero">
+        <div class="hero-content">
+            <p class="hero-kicker">Herramienta de apoyo</p>
+            <div class="container d-flex align-items-center mb-3">
+                <h1>Control de tiempos para conversaciones</h1>
+                <img src="./assets/img/reloj.png" alt="reloj" class="d-inline-block align-text-top" id="reloj">
+            </div>
+            <p class="hero-text">
+                Organiza hasta 4 chats activos y recibe una ayuda visual para saber cuándo revisar cada conversación.
+            </p>
+            <p class="hero-note">
+                Los datos se guardan solo en este navegador. No se envían a ninguna base de datos.
+            </p>
+        </div>
+    </header>
+
+    <main class="main-container">
+
+        <section class="general-actions" aria-label="Acciones generales">
+            <button type="button" id="clearStorage" class="clear-storage">
+                Borrar datos guardados
+            </button>
+
+            <p id="globalMessage" class="global-message" aria-live="polite"></p>
+        </section>
+
+        <section class="chats-grid" aria-label="Temporizadores de conversaciones">
+
+            <article class="chat-card">
+                <h2>Chat 1</h2>
+
+                <label class="field">
+                    <span>Nombre o referencia</span>
+                    <input type="text" class="chat-person" placeholder="Ej: María, Pedro, Sra. Ana"
+                        autocomplete="off" />
+                </label>
+
+                <div class="time-fields">
+                    <label class="field">
+                        <span>Minutos</span>
+                        <input type="number" class="minutes" min="0" placeholder="0" />
+                    </label>
+
+                    <label class="field">
+                        <span>Segundos</span>
+                        <input type="number" class="seconds" min="0" max="59" placeholder="0" />
+                    </label>
+                </div>
+
+                <div class="quick-times" aria-label="Tiempos rápidos">
+                    <button type="button" class="quick-time" data-minutes="3">3 min</button>
+                    <button type="button" class="quick-time" data-minutes="5">5 min</button>
+                    <button type="button" class="quick-time" data-minutes="10">10 min</button>
+                </div>
+
+                <p class="status" aria-live="polite">Sin iniciar</p>
+
+                <p class="display" aria-live="polite">00:00</p>
+
+                <div class="buttons">
+                    <button type="button" class="start">Iniciar</button>
+                    <button type="button" class="pause">Pausar</button>
+                    <button type="button" class="done">Listo</button>
+                </div>
+            </article>
+
+            <article class="chat-card">
+                <h2>Chat 2</h2>
+
+                <label class="field">
+                    <span>Nombre o referencia</span>
+                    <input type="text" class="chat-person" placeholder="Ej: María, Pedro, Sra. Ana"
+                        autocomplete="off" />
+                </label>
+
+                <div class="time-fields">
+                    <label class="field">
+                        <span>Minutos</span>
+                        <input type="number" class="minutes" min="0" placeholder="0" />
+                    </label>
+
+                    <label class="field">
+                        <span>Segundos</span>
+                        <input type="number" class="seconds" min="0" max="59" placeholder="0" />
+                    </label>
+                </div>
+
+                <div class="quick-times" aria-label="Tiempos rápidos">
+                    <button type="button" class="quick-time" data-minutes="3">3 min</button>
+                    <button type="button" class="quick-time" data-minutes="5">5 min</button>
+                    <button type="button" class="quick-time" data-minutes="10">10 min</button>
+                </div>
+
+                <p class="status" aria-live="polite">Sin iniciar</p>
+
+                <p class="display" aria-live="polite">00:00</p>
+
+                <div class="buttons">
+                    <button type="button" class="start">Iniciar</button>
+                    <button type="button" class="pause">Pausar</button>
+                    <button type="button" class="done">Listo</button>
+                </div>
+            </article>
+
+            <article class="chat-card">
+                <h2>Chat 3</h2>
+
+                <label class="field">
+                    <span>Nombre o referencia</span>
+                    <input type="text" class="chat-person" placeholder="Ej: María, Pedro, Sra. Ana"
+                        autocomplete="off" />
+                </label>
+
+                <div class="time-fields">
+                    <label class="field">
+                        <span>Minutos</span>
+                        <input type="number" class="minutes" min="0" placeholder="0" />
+                    </label>
+
+                    <label class="field">
+                        <span>Segundos</span>
+                        <input type="number" class="seconds" min="0" max="59" placeholder="0" />
+                    </label>
+                </div>
+
+                <div class="quick-times" aria-label="Tiempos rápidos">
+                    <button type="button" class="quick-time" data-minutes="3">3 min</button>
+                    <button type="button" class="quick-time" data-minutes="5">5 min</button>
+                    <button type="button" class="quick-time" data-minutes="10">10 min</button>
+                </div>
+
+                <p class="status" aria-live="polite">Sin iniciar</p>
+
+                <p class="display" aria-live="polite">00:00</p>
+
+                <div class="buttons">
+                    <button type="button" class="start">Iniciar</button>
+                    <button type="button" class="pause">Pausar</button>
+                    <button type="button" class="done">Listo</button>
+                </div>
+            </article>
+
+            <article class="chat-card">
+                <h2>Chat 4</h2>
+
+                <label class="field">
+                    <span>Nombre o referencia</span>
+                    <input type="text" class="chat-person" placeholder="Ej: María, Pedro, Sra. Ana"
+                        autocomplete="off" />
+                </label>
+
+                <div class="time-fields">
+                    <label class="field">
+                        <span>Minutos</span>
+                        <input type="number" class="minutes" min="0" placeholder="0" />
+                    </label>
+
+                    <label class="field">
+                        <span>Segundos</span>
+                        <input type="number" class="seconds" min="0" max="59" placeholder="0" />
+                    </label>
+                </div>
+
+                <div class="quick-times" aria-label="Tiempos rápidos">
+                    <button type="button" class="quick-time" data-minutes="3">3 min</button>
+                    <button type="button" class="quick-time" data-minutes="5">5 min</button>
+                    <button type="button" class="quick-time" data-minutes="10">10 min</button>
+                </div>
+
+                <p class="status" aria-live="polite">Sin iniciar</p>
+
+                <p class="display" aria-live="polite">00:00</p>
+
+                <div class="buttons">
+                    <button type="button" class="start">Iniciar</button>
+                    <button type="button" class="pause">Pausar</button>
+                    <button type="button" class="done">Listo</button>
+                </div>
+            </article>
+
+        </section>
+    </main>
+
+
+    <div style="height: 56px;"></div> <!-- Espacio sobre el footer garantizado -->
+    <footer class="footer bg-dark text-light">
+        <div class="container py-2">
+            <div class="d-flex justify-content-center align-items-center flex-wrap">
+                <p class="mb-0">&copy; 2026 Kathy Alderete</p>
+            </div>
+            <div>
+                <p class="audio-credit">
+                    Audio:
+                    <a href="https://pixabay.com/es/users/freesound_community-46691455/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=6402"
+                        target="_blank" rel="noopener noreferrer">freesound_community</a>
+                    from
+                    <a href="https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=6402"
+                        target="_blank" rel="noopener noreferrer">Pixabay</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+        integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+        integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+        crossorigin="anonymous"></script>
+    <script src="./assets/js/script.js"></script>
+
+</body>
+
+</html>
