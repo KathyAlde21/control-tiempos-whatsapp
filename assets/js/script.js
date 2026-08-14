@@ -1,12 +1,19 @@
 const STORAGE_KEY = "control_tiempos_conversaciones";
+
 const ALARM_SOUND_PATH =
   "./assets/sounds/freesound_community-alarm-clock-short.mp3";
 
-const chatCards = document.querySelectorAll(".chat-card");
+const chatCards = Array.from(document.querySelectorAll(".chat-card"));
 const clearStorageButton = document.querySelector("#clearStorage");
 const globalMessage = document.querySelector("#globalMessage");
 
 const intervals = Array.from({ length: chatCards.length }, () => null);
+
+const alarmSound = new Audio(ALARM_SOUND_PATH);
+alarmSound.preload = "auto";
+alarmSound.volume = 0.65;
+
+let isAudioUnlocked = false;
 
 const defaultTimers = Array.from({ length: chatCards.length }, () => ({
   person: "",
@@ -22,11 +29,11 @@ const defaultTimers = Array.from({ length: chatCards.length }, () => ({
 
 let timers = loadTimers();
 
+initializeApp();
+
 /* --------------------------------------------------------- */
 /* INICIALIZACIÓN */
 /* --------------------------------------------------------- */
-
-initializeApp();
 
 function initializeApp() {
   timers = normalizeTimers(timers);
@@ -41,7 +48,6 @@ function initializeApp() {
     const quickTimeButtons = card.querySelectorAll(".quick-time");
 
     restoreRunningTimer(index);
-
     syncInputs(index);
     updateCardView(index);
 
@@ -61,12 +67,14 @@ function initializeApp() {
     quickTimeButtons.forEach((button) => {
       button.addEventListener("click", () => {
         const minutes = Number(button.dataset.minutes);
+        const mode = button.dataset.mode || "normal";
 
-        setQuickTime(index, minutes);
+        setQuickTime(index, minutes, mode);
       });
     });
 
     startButton.addEventListener("click", () => {
+      unlockAlarmSound();
       startTimer(index);
     });
 
@@ -85,6 +93,7 @@ function initializeApp() {
 /* --------------------------------------------------------- */
 /* ALMACENAMIENTO LOCAL */
 /* --------------------------------------------------------- */
+
 function loadTimers() {
   const savedTimers = localStorage.getItem(STORAGE_KEY);
 
@@ -114,6 +123,7 @@ function saveTimers() {
 /* --------------------------------------------------------- */
 /* RESTAURAR TEMPORIZADORES */
 /* --------------------------------------------------------- */
+
 function restoreRunningTimer(index) {
   const timer = timers[index];
 
@@ -129,12 +139,13 @@ function restoreRunningTimer(index) {
     timer.isRunning = false;
     timer.isFinished = true;
     timer.status = "Revisar este chat";
+
     saveTimers();
     return;
   }
 
   timer.remainingSeconds = remainingSeconds;
-  timer.status = "En espera";
+  timer.status = getRunningStatus(timer);
 
   startInterval(index);
 }
@@ -142,6 +153,7 @@ function restoreRunningTimer(index) {
 /* --------------------------------------------------------- */
 /* SINCRONIZACIÓN DE LA INTERFAZ */
 /* --------------------------------------------------------- */
+
 function syncInputs(index) {
   const card = chatCards[index];
   const personInput = card.querySelector(".chat-person");
@@ -162,13 +174,18 @@ function updateCardView(index) {
   const minutesInput = card.querySelector(".minutes");
   const secondsInput = card.querySelector(".seconds");
   const quickTimeButtons = card.querySelectorAll(".quick-time");
+  const startButton = card.querySelector(".start");
+  const pauseButton = card.querySelector(".pause");
+
+  const isPaused =
+    timer.status === "Pausado" || timer.status === "Contingencia pausada";
 
   display.textContent = formatTime(timer.remainingSeconds);
   status.textContent = timer.status;
 
-  card.classList.toggle("is-running", timer.isRunning);
-  card.classList.toggle("is-paused", timer.status === "Pausado");
-  card.classList.toggle("is-finished", timer.isFinished);
+  startButton.textContent = isPaused ? "Continuar" : "Iniciar";
+  startButton.disabled = timer.isRunning;
+  pauseButton.disabled = !timer.isRunning;
 
   minutesInput.disabled = timer.isRunning;
   secondsInput.disabled = timer.isRunning;
@@ -177,30 +194,16 @@ function updateCardView(index) {
     button.disabled = timer.isRunning;
   });
 
-  card.classList.toggle(
-      "is-running",
-      timer.isRunning
-    );
-
-    card.classList.toggle(
-      "is-paused",
-      isPaused
-    );
-
-    card.classList.toggle(
-      "is-finished",
-      timer.isFinished
-    );
-
-    card.classList.toggle(
-      "is-contingency",
-      timer.mode === "contingency"
-    );
-  }
+  card.classList.toggle("is-running", timer.isRunning);
+  card.classList.toggle("is-paused", isPaused);
+  card.classList.toggle("is-finished", timer.isFinished);
+  card.classList.toggle("is-contingency", timer.mode === "contingency");
+}
 
 /* --------------------------------------------------------- */
 /* TIEMPO MANUAL */
 /* --------------------------------------------------------- */
+
 function updateTimeFromInputs(index) {
   const timer = timers[index];
 
@@ -212,28 +215,20 @@ function updateTimeFromInputs(index) {
 
   timer.minutes = result.minutes;
   timer.seconds = result.seconds;
-timer.endTime = null;
-timer.isFinished = false;
-
-/*
-    Cuando la persona escribe un tiempo manual,
-    se considera un tiempo normal.
-  */
-
-timer.mode = "normal";
-
+  timer.endTime = null;
+  timer.isFinished = false;
+  timer.mode = "normal";
 
   if (!result.isValid) {
     timer.remainingSeconds = 0;
-    timer.isFinished = false;
     timer.status = result.message;
+
     saveTimers();
     updateCardView(index);
     return;
   }
 
   timer.remainingSeconds = result.totalSeconds;
-  timer.isFinished = false;
   timer.status = result.totalSeconds > 0 ? "Tiempo listo" : "Disponible";
 
   saveTimers();
@@ -280,7 +275,8 @@ function getTimeFromInputs(index) {
 /* --------------------------------------------------------- */
 /* BOTONES DE TIEMPO RÁPIDO */
 /* --------------------------------------------------------- */
-function setQuickTime(index, minutes) {
+
+function setQuickTime(index, minutes, mode = "normal") {
   const timer = timers[index];
 
   if (timer.isRunning) {
@@ -293,10 +289,8 @@ function setQuickTime(index, minutes) {
   timer.endTime = null;
   timer.isRunning = false;
   timer.isFinished = false;
-    timer.mode = mode;
-
-    timer.status =
-      mode === "contingency" ? "Contingencia lista" : "Tiempo listo";
+  timer.mode = mode;
+  timer.status = mode === "contingency" ? "Contingencia lista" : "Tiempo listo";
 
   syncInputs(index);
   saveTimers();
@@ -306,6 +300,7 @@ function setQuickTime(index, minutes) {
 /* --------------------------------------------------------- */
 /* INICIAR */
 /* --------------------------------------------------------- */
+
 function startTimer(index) {
   const timer = timers[index];
 
@@ -322,21 +317,19 @@ function startTimer(index) {
     timer.remainingSeconds = 0;
     timer.status = "Ingresa un tiempo";
     timer.isFinished = false;
+
     saveTimers();
     updateCardView(index);
     return;
   }
-  /*
-    Si estaba pausado, continúa desde el tiempo restante.
-    Si no, comienza desde el tiempo ingresado.
-  */
+
   timer.remainingSeconds =
     timer.remainingSeconds > 0 ? timer.remainingSeconds : result.totalSeconds;
 
   timer.endTime = Date.now() + timer.remainingSeconds * 1000;
   timer.isRunning = true;
   timer.isFinished = false;
-  timer.status = "En espera";
+  timer.status = getRunningStatus(timer);
 
   saveTimers();
   updateCardView(index);
@@ -346,6 +339,7 @@ function startTimer(index) {
 /* --------------------------------------------------------- */
 /* INTERVALO */
 /* --------------------------------------------------------- */
+
 function startInterval(index) {
   clearInterval(intervals[index]);
 
@@ -372,6 +366,7 @@ function startInterval(index) {
 /* --------------------------------------------------------- */
 /* PAUSAR */
 /* --------------------------------------------------------- */
+
 function pauseTimer(index) {
   const timer = timers[index];
 
@@ -386,7 +381,8 @@ function pauseTimer(index) {
   timer.endTime = null;
   timer.isRunning = false;
   timer.isFinished = false;
-  timer.status = "Pausado";
+  timer.status =
+    timer.mode === "contingency" ? "Contingencia pausada" : "Pausado";
 
   saveTimers();
   updateCardView(index);
@@ -395,6 +391,7 @@ function pauseTimer(index) {
 /* --------------------------------------------------------- */
 /* FINALIZAR TEMPORIZADOR */
 /* --------------------------------------------------------- */
+
 function finishTimer(index) {
   const timer = timers[index];
 
@@ -415,18 +412,24 @@ function finishTimer(index) {
 /* --------------------------------------------------------- */
 /* LIBERAR TARJETA */
 /* --------------------------------------------------------- */
-function markTimerAsDone(index) {
-  const timer = timers[index];
 
+function markTimerAsDone(index) {
   clearInterval(intervals[index]);
   intervals[index] = null;
 
-  timer.remainingSeconds = 0;
-  timer.endTime = null;
-  timer.isRunning = false;
-  timer.isFinished = false;
-  timer.status = "Listo";
+  timers[index] = {
+    person: "",
+    minutes: "",
+    seconds: "",
+    remainingSeconds: 0,
+    endTime: null,
+    isRunning: false,
+    isFinished: false,
+    mode: "normal",
+    status: "Disponible",
+  };
 
+  syncInputs(index);
   saveTimers();
   updateCardView(index);
 }
@@ -434,6 +437,7 @@ function markTimerAsDone(index) {
 /* --------------------------------------------------------- */
 /* BORRAR TODOS LOS DATOS */
 /* --------------------------------------------------------- */
+
 function clearSavedData() {
   localStorage.removeItem(STORAGE_KEY);
 
@@ -449,7 +453,7 @@ function clearSavedData() {
     updateCardView(index);
   });
 
-  globalMessage.textContent = "Datos guardados borrados.";
+  globalMessage.textContent = "Todos los datos fueron borrados.";
 
   setTimeout(() => {
     globalMessage.textContent = "";
@@ -457,8 +461,43 @@ function clearSavedData() {
 }
 
 /* --------------------------------------------------------- */
+/* AUDIO */
+/* --------------------------------------------------------- */
+
+async function unlockAlarmSound() {
+  if (isAudioUnlocked) {
+    return;
+  }
+
+  try {
+    alarmSound.muted = true;
+    await alarmSound.play();
+    alarmSound.pause();
+    alarmSound.currentTime = 0;
+    alarmSound.muted = false;
+    isAudioUnlocked = true;
+  } catch (error) {
+    alarmSound.muted = false;
+    console.info("El audio se habilitará cuando el navegador lo permita.");
+  }
+}
+
+function playAlarm() {
+  alarmSound.pause();
+  alarmSound.currentTime = 0;
+
+  alarmSound.play().catch((error) => {
+    console.log(
+      "El navegador bloqueó el sonido o no se encontró el archivo de alarma.",
+      error,
+    );
+  });
+}
+
+/* --------------------------------------------------------- */
 /* FUNCIONES AUXILIARES */
 /* --------------------------------------------------------- */
+
 function getRunningStatus(timer) {
   return timer.mode === "contingency" ? "Contingencia en curso" : "En espera";
 }
@@ -472,14 +511,4 @@ function formatTime(totalSeconds) {
   const seconds = totalSeconds % 60;
 
   return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
-}
-
-function playAlarm() {
-  const alarmSound = new Audio(ALARM_SOUND_PATH);
-
-  alarmSound.play().catch(() => {
-    console.log(
-      "El navegador bloqueó el sonido o no se encontró el archivo de alarma.",
-    );
-  });
 }

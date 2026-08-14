@@ -11,10 +11,14 @@
 
 **<h3>📌 Descripción</h3>**
 
-<p>Este proyecto nace como una herramienta práctica para apoyar la gestión de varias conversaciones activas al mismo tiempo.</p>
-<p>Su objetivo principal es entregar una ayuda visual simple para controlar el tiempo entre respuestas, especialmente cuando se trabaja con distintos chats y se necesita cambiar constantemente de conversación o pestaña.</p>
-<p>La página permite usar hasta <b>4 temporizadores independientes</b>, cada uno asociado a un chat. En cada tarjeta se puede anotar el nombre o referencia de la persona, definir un tiempo manualmente o seleccionar opciones rápidas de <b>3, 5 o 10 minutos</b></p>
-<p>El objetivo no es generar presión ni estrés adicional, sino entregar una herramienta amigable, clara y fácil de usar para personas que no necesariamente tienen conocimientos técnicos.</p>
+<p>Este proyecto nace como una herramienta práctica para apoyar la gestión de varias conversaciones activas al mismo tiempo. 
+  La idea principal es contar con una ayuda visual simple que permita controlar el tiempo entre respuestas, especialmente 
+  cuando se trabaja con distintos chats y se necesita evitar confusiones al cambiar de pestaña o conversación.</p>
+<p>La página permite usar hasta <b>4 temporizadores independientes</b>, cada uno asociado a un chat. 
+  En cada tarjeta se puede anotar el nombre o referencia de la persona, definir un tiempo manualmente o
+   seleccionar opciones rápidas de <b>3, 5 o 10 minutos</b>.</p>
+<p>El objetivo no es generar presión ni estrés adicional, sino entregar una herramienta amigable, clara y fácil de usar
+ para personas que no necesariamente tienen conocimientos técnicos.</p>
 
 <!-- --------------------------------------------------------- -->
 
@@ -36,11 +40,14 @@
 
 **<h3>🧠 Propósito del proyecto</h3>**
 
-<p>El propósito de este proyecto es facilitar el seguimiento de conversaciones simultáneas, 
-  evitando errores al responder y reduciendo la carga mental que puede producir estar pendiente de varios tiempos a la vez.</p>
-<p>Por eso, la interfaz se diseñó con textos simples, colores suaves y acciones claras. 
-  La prioridad fue crear una herramienta de apoyo, no un sistema complejo ni una aplicación
-   que interrumpa el trabajo con alertas invasivas.</p>
+<p>
+  El propósito de este proyecto es facilitar el seguimiento de conversaciones simultáneas, evitando errores al responder y reduciendo la carga mental que puede producir estar pendiente de varios tiempos a la vez.
+</p>
+
+<p>
+  Por eso, la interfaz se diseñó con textos simples, colores suaves y acciones claras. 
+  La prioridad fue crear una herramienta de apoyo, no un sistema complejo ni una aplicación que interrumpa el trabajo con alertas invasivas.
+</p>
 
 <!-- --------------------------------------------------------- -->
 
@@ -54,11 +61,18 @@
 
 **<h3>🔐 Sobre el almacenamiento de datos</h3>**
 
-<p>Este proyecto utiliza <b>localStorage</b>, por lo que los datos se guardan únicamente en el navegador de cada persona.</p>
-<p>La información no se envía a servidores, no se almacena en GitHub y no se comparte entre usuarios. 
-  Si otra persona abre el mismo enlace desde otro computador o navegador, tendrá sus propios datos guardados de forma independiente.</p>
-<p>Se recomienda usar solo nombres o referencias simples, evitando ingresar datos sensibles como RUT, direcciones,
- teléfonos completos o información privada.</p>
+<p>
+  Este proyecto utiliza <b>localStorage</b>, por lo que los datos se guardan únicamente en el navegador de cada persona.
+</p>
+
+<p>
+  La información no se envía a servidores, no se almacena en GitHub y no se comparte entre usuarios. 
+  Si otra persona abre el mismo enlace desde otro computador o navegador, tendrá sus propios datos guardados de forma independiente.
+</p>
+
+<p>
+  Se recomienda usar solo nombres o referencias simples, evitando ingresar datos sensibles como RUT, direcciones, teléfonos completos o información privada.
+</p>
 
 <!-- --------------------------------------------------------- -->
 
@@ -68,6 +82,7 @@
   <img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white">
   <img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white">
   <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black">
+  <img src="https://img.shields.io/badge/Bootstrap_5-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white">
 </p>
 
 <!-- --------------------------------------------------------- -->
