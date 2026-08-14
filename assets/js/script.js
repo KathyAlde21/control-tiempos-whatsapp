@@ -16,10 +16,15 @@ const defaultTimers = Array.from({ length: chatCards.length }, () => ({
   endTime: null,
   isRunning: false,
   isFinished: false,
-  status: "Sin iniciar",
+  mode: "normal",
+  status: "Disponible",
 }));
 
 let timers = loadTimers();
+
+/* --------------------------------------------------------- */
+/* INICIALIZACIÓN */
+/* --------------------------------------------------------- */
 
 initializeApp();
 
@@ -77,6 +82,9 @@ function initializeApp() {
   clearStorageButton.addEventListener("click", clearSavedData);
 }
 
+/* --------------------------------------------------------- */
+/* ALMACENAMIENTO LOCAL */
+/* --------------------------------------------------------- */
 function loadTimers() {
   const savedTimers = localStorage.getItem(STORAGE_KEY);
 
@@ -103,6 +111,9 @@ function saveTimers() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(timers));
 }
 
+/* --------------------------------------------------------- */
+/* RESTAURAR TEMPORIZADORES */
+/* --------------------------------------------------------- */
 function restoreRunningTimer(index) {
   const timer = timers[index];
 
@@ -128,6 +139,9 @@ function restoreRunningTimer(index) {
   startInterval(index);
 }
 
+/* --------------------------------------------------------- */
+/* SINCRONIZACIÓN DE LA INTERFAZ */
+/* --------------------------------------------------------- */
 function syncInputs(index) {
   const card = chatCards[index];
   const personInput = card.querySelector(".chat-person");
@@ -162,8 +176,31 @@ function updateCardView(index) {
   quickTimeButtons.forEach((button) => {
     button.disabled = timer.isRunning;
   });
-}
 
+  card.classList.toggle(
+      "is-running",
+      timer.isRunning
+    );
+
+    card.classList.toggle(
+      "is-paused",
+      isPaused
+    );
+
+    card.classList.toggle(
+      "is-finished",
+      timer.isFinished
+    );
+
+    card.classList.toggle(
+      "is-contingency",
+      timer.mode === "contingency"
+    );
+  }
+
+/* --------------------------------------------------------- */
+/* TIEMPO MANUAL */
+/* --------------------------------------------------------- */
 function updateTimeFromInputs(index) {
   const timer = timers[index];
 
@@ -175,6 +212,16 @@ function updateTimeFromInputs(index) {
 
   timer.minutes = result.minutes;
   timer.seconds = result.seconds;
+timer.endTime = null;
+timer.isFinished = false;
+
+/*
+    Cuando la persona escribe un tiempo manual,
+    se considera un tiempo normal.
+  */
+
+timer.mode = "normal";
+
 
   if (!result.isValid) {
     timer.remainingSeconds = 0;
@@ -187,7 +234,7 @@ function updateTimeFromInputs(index) {
 
   timer.remainingSeconds = result.totalSeconds;
   timer.isFinished = false;
-  timer.status = result.totalSeconds > 0 ? "Tiempo listo" : "Sin iniciar";
+  timer.status = result.totalSeconds > 0 ? "Tiempo listo" : "Disponible";
 
   saveTimers();
   updateCardView(index);
@@ -230,6 +277,9 @@ function getTimeFromInputs(index) {
   };
 }
 
+/* --------------------------------------------------------- */
+/* BOTONES DE TIEMPO RÁPIDO */
+/* --------------------------------------------------------- */
 function setQuickTime(index, minutes) {
   const timer = timers[index];
 
@@ -243,13 +293,19 @@ function setQuickTime(index, minutes) {
   timer.endTime = null;
   timer.isRunning = false;
   timer.isFinished = false;
-  timer.status = "Tiempo listo";
+    timer.mode = mode;
+
+    timer.status =
+      mode === "contingency" ? "Contingencia lista" : "Tiempo listo";
 
   syncInputs(index);
   saveTimers();
   updateCardView(index);
 }
 
+/* --------------------------------------------------------- */
+/* INICIAR */
+/* --------------------------------------------------------- */
 function startTimer(index) {
   const timer = timers[index];
 
@@ -270,7 +326,10 @@ function startTimer(index) {
     updateCardView(index);
     return;
   }
-
+  /*
+    Si estaba pausado, continúa desde el tiempo restante.
+    Si no, comienza desde el tiempo ingresado.
+  */
   timer.remainingSeconds =
     timer.remainingSeconds > 0 ? timer.remainingSeconds : result.totalSeconds;
 
@@ -284,6 +343,9 @@ function startTimer(index) {
   startInterval(index);
 }
 
+/* --------------------------------------------------------- */
+/* INTERVALO */
+/* --------------------------------------------------------- */
 function startInterval(index) {
   clearInterval(intervals[index]);
 
@@ -307,6 +369,9 @@ function startInterval(index) {
   }, 250);
 }
 
+/* --------------------------------------------------------- */
+/* PAUSAR */
+/* --------------------------------------------------------- */
 function pauseTimer(index) {
   const timer = timers[index];
 
@@ -327,6 +392,9 @@ function pauseTimer(index) {
   updateCardView(index);
 }
 
+/* --------------------------------------------------------- */
+/* FINALIZAR TEMPORIZADOR */
+/* --------------------------------------------------------- */
 function finishTimer(index) {
   const timer = timers[index];
 
@@ -344,6 +412,9 @@ function finishTimer(index) {
   playAlarm();
 }
 
+/* --------------------------------------------------------- */
+/* LIBERAR TARJETA */
+/* --------------------------------------------------------- */
 function markTimerAsDone(index) {
   const timer = timers[index];
 
@@ -360,6 +431,9 @@ function markTimerAsDone(index) {
   updateCardView(index);
 }
 
+/* --------------------------------------------------------- */
+/* BORRAR TODOS LOS DATOS */
+/* --------------------------------------------------------- */
 function clearSavedData() {
   localStorage.removeItem(STORAGE_KEY);
 
@@ -380,6 +454,13 @@ function clearSavedData() {
   setTimeout(() => {
     globalMessage.textContent = "";
   }, 3000);
+}
+
+/* --------------------------------------------------------- */
+/* FUNCIONES AUXILIARES */
+/* --------------------------------------------------------- */
+function getRunningStatus(timer) {
+  return timer.mode === "contingency" ? "Contingencia en curso" : "En espera";
 }
 
 function getRemainingSeconds(endTime) {

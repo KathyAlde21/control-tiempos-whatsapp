@@ -11,28 +11,26 @@
 
 **<h3>📌 Descripción</h3>**
 
-<p>Este proyecto nace como una herramienta práctica para apoyar la gestión de varias conversaciones activas al mismo tiempo. 
-  La idea principal es contar con una ayuda visual simple que permita controlar el tiempo entre respuestas, especialmente 
-  cuando se trabaja con distintos chats y se necesita evitar confusiones al cambiar de pestaña o conversación.</p>
-<p>La página permite usar hasta <b>4 temporizadores independientes</b>, cada uno asociado a un chat. 
-  En cada tarjeta se puede anotar el nombre o referencia de la persona, definir un tiempo manualmente o
-   seleccionar opciones rápidas de <b>3, 5 o 10 minutos</b></p>
-<p>El objetivo no es generar presión ni estrés adicional, sino entregar una herramienta amigable, clara y fácil de usar
- para personas que no necesariamente tienen conocimientos técnicos.</p>
+<p>Este proyecto nace como una herramienta práctica para apoyar la gestión de varias conversaciones activas al mismo tiempo.</p>
+<p>Su objetivo principal es entregar una ayuda visual simple para controlar el tiempo entre respuestas, especialmente cuando se trabaja con distintos chats y se necesita cambiar constantemente de conversación o pestaña.</p>
+<p>La página permite usar hasta <b>4 temporizadores independientes</b>, cada uno asociado a un chat. En cada tarjeta se puede anotar el nombre o referencia de la persona, definir un tiempo manualmente o seleccionar opciones rápidas de <b>3, 5 o 10 minutos</b></p>
+<p>El objetivo no es generar presión ni estrés adicional, sino entregar una herramienta amigable, clara y fácil de usar para personas que no necesariamente tienen conocimientos técnicos.</p>
 
 <!-- --------------------------------------------------------- -->
 
-**<h3>✨ ¿Qué permite hacer este sitio?</h3>**
+**<h3>✨ Funcionalidades</h3>**
 
 - Controlar hasta **4 conversaciones activas** de forma independiente.
 - Escribir un **nombre o referencia de la persona** asociada a cada chat.
 - Definir tiempos manuales usando minutos y segundos.
 - Usar botones rápidos de **3 min, 5 min y 10 min**.
-- Iniciar, pausar y marcar como listo cada temporizador.
-- Recibir una señal visual cuando corresponde revisar un chat.
+- Botón especial de **2 minutos para contingencias**.
+- Botones para iniciar, pausar y marcar como listo cada temporizador.
+- Señal visual cuando corresponde revisar una conversación.
 - Reproducir un sonido breve al finalizar el tiempo.
 - Mantener los datos guardados en el navegador mediante `localStorage`.
 - Borrar los datos guardados cuando sea necesario.
+- Diseño responsive para computador, tablet y teléfono.
 
 <!-- --------------------------------------------------------- -->
 
@@ -43,6 +41,14 @@
 <p>Por eso, la interfaz se diseñó con textos simples, colores suaves y acciones claras. 
   La prioridad fue crear una herramienta de apoyo, no un sistema complejo ni una aplicación
    que interrumpa el trabajo con alertas invasivas.</p>
+
+<!-- --------------------------------------------------------- -->
+
+**<h3>⚠️ Tiempo de contingencia</h3>**
+
+<p>La aplicación incluye un acceso rápido de <b>2 minutos</b> para situaciones de contingencia.</p>
+
+<p>Este botón utiliza un tono ámbar para diferenciarlo de los tiempos normales, sin recurrir a animaciones, parpadeos o colores excesivamente intensos que puedan aumentar el estrés durante la atención.</p>
 
 <!-- --------------------------------------------------------- -->
 
@@ -81,6 +87,7 @@
 - Manejo de temporizadores con `setInterval` y `clearInterval`.
 - Control de estados independientes para cada tarjeta.
 - Uso de `localStorage` para guardar información en el navegador del usuario.
+- Conversión de objetos mediante `JSON.stringify` y `JSON.parse`.
 - Lectura de atributos personalizados con `data-*`.
 - Reproducción de audio desde JavaScript.
 - Diseño responsive con CSS Grid y media queries.
