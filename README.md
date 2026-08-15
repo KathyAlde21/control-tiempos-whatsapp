@@ -89,9 +89,18 @@
 
 **<h3>📷 Vista previa</h3>**
 
-<p>
-  <img src="./assets/img/vista_previa.png" alt="Vista previa del sitio control de tiempos para conversaciones" width="50%">
-</p>
+<table>
+  <tr>
+    <td align="center" width="33%">
+      <img src="./assets/img/vista_previa.png" alt="Actividad M1AE1 - ABP1" width="100%"><br><br>
+      <strong>Vista general de pagina web</strong><br>
+    </td>
+    <td align="center" width="50%">
+      <img src="./assets/img/vista_tiempos.png" alt="Proyecto 3 del módulo 1" width="100%"><br><br>
+      <strong>Temporizadores en ejecución</strong><br>
+    </td>
+  </tr>
+</table>
 
 <!-- --------------------------------------------------------- -->
 
