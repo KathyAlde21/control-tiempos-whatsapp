@@ -279,22 +279,50 @@ function getTimeFromInputs(index) {
 function setQuickTime(index, minutes, mode = "normal") {
   const timer = timers[index];
 
+  /*
+    Mientras el temporizador está funcionando,
+    los botones rápidos permanecen deshabilitados.
+  */
+
   if (timer.isRunning) {
     return;
   }
 
+  /*
+    Si había un intervalo anterior pausado
+    o terminado, nos aseguramos de detenerlo.
+  */
+
+  clearInterval(intervals[index]);
+  intervals[index] = null;
+
+  const totalSeconds = minutes * 60;
+
   timer.minutes = minutes;
   timer.seconds = 0;
-  timer.remainingSeconds = minutes * 60;
-  timer.endTime = null;
-  timer.isRunning = false;
+  timer.remainingSeconds = totalSeconds;
+  timer.endTime = Date.now() + totalSeconds * 1000;
+  timer.isRunning = true;
   timer.isFinished = false;
   timer.mode = mode;
-  timer.status = mode === "contingency" ? "Contingencia lista" : "Tiempo listo";
+  timer.status = getRunningStatus(timer);
+
+  /*
+    Mostramos los minutos seleccionados
+    en los campos de la tarjeta.
+  */
 
   syncInputs(index);
+
+  /*
+    Guardamos el estado antes de comenzar,
+    para poder recuperar el temporizador
+    si la página se actualiza.
+  */
+
   saveTimers();
   updateCardView(index);
+  startInterval(index);
 }
 
 /* --------------------------------------------------------- */
@@ -414,20 +442,24 @@ function finishTimer(index) {
 /* --------------------------------------------------------- */
 
 function markTimerAsDone(index) {
+  const timer = timers[index];
+
   clearInterval(intervals[index]);
   intervals[index] = null;
 
-  timers[index] = {
-    person: "",
-    minutes: "",
-    seconds: "",
-    remainingSeconds: 0,
-    endTime: null,
-    isRunning: false,
-    isFinished: false,
-    mode: "normal",
-    status: "Disponible",
-  };
+  /*
+    Se limpia solamente el temporizador.
+    El nombre o referencia de la persona se conserva.
+  */
+
+  timer.minutes = "";
+  timer.seconds = "";
+  timer.remainingSeconds = 0;
+  timer.endTime = null;
+  timer.isRunning = false;
+  timer.isFinished = false;
+  timer.mode = "normal";
+  timer.status = "Disponible";
 
   syncInputs(index);
   saveTimers();
